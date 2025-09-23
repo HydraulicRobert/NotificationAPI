@@ -1,11 +1,13 @@
-package com.proxy.notifications.configuration;
+package com.proxy.notifications.configuration.variable;
 
 import java.nio.file.Paths;
-public class global {
+public class Global {
 	//files
 	private static final String gStrCfgPath 	= Paths.get(System.getProperty("user.dir"),"configuration").toString();
 	private static final String gStrCfgName 	= "vsystem.ini";
 	private static final String gStrUserList 	= "userlist.csv";
+	private static final String gStrPubKey	 	= "publickey.pem";
+	private static final String gStrPrvKey	 	= "privatekey.pem";
 	
 	//sql
 	public static final String gStrSQLGetSpecificSettings = 
@@ -23,6 +25,15 @@ public class global {
 	private static final String gStrNotShowUsersPassword	= "; password: ";
 	private static final String gStrNotArgumentsAmount	= "arguments required: ";
 	//cfg
+	private static final String gStrCfgStrtCat			= "category:";
+	private static final String gStrCfgStrtObj			= "object:";
+	private static final String gStrCfgStrtDesc			= "description:";
+	private static final String gStrCfgStrtExp			= "example:";
+	private static final String gStrCfgStrtCur			= "currently:";
+	private static final String gStrCfgStrtKpEmp		= "keep empty to keep value. else type something in";
+	private static final String gStrCfgStrtInp			= "Input:";
+	private static final String gStrCfgStrtExt			= "closing app";
+	
 	private static final String gStrCfgDirNotFound 		= "directory configuration doesn't exist. creating";
 	private static final String gStrCfgDirCreated 		= "directory configuration doesn't exist. creating";
 	private static final String gStrCfgDirNotCreated 	= "directory configuration doesn't exist. creating";
@@ -44,8 +55,12 @@ public class global {
 	private static final String gStrCfgUserExists		= "user '$s1' exists";
 	private static final String gStrCfgAuthenticated	= "authenticated";
 	private static final String gStrCfgNotAuthenticated	= "not authenticated";
-	private static final String gStrCfgAuthNameUnknown	= "not authenticated";
-	
+	private static final String gStrCfgAuthNameUnknown	= "unknown";
+	//webSecurity
+	private static final String gStrCfgTokenAuthFailed = "token validation failed ";
+	public static String getGstrcfgtokenauthfailed() {
+		return gStrCfgTokenAuthFailed;
+	}
 	public static String getGstrcfgauthnameunknown() {
 		return gStrCfgAuthNameUnknown;
 	}
@@ -127,6 +142,30 @@ public class global {
 	public static String getGstrnotargumentsamount() {
 		return gStrNotArgumentsAmount;
 	}
+	public static String getGstrcfgstrtcat() {
+		return gStrCfgStrtCat;
+	}
+	public static String getGstrcfgstrtobj() {
+		return gStrCfgStrtObj;
+	}
+	public static String getGstrcfgstrtdesc() {
+		return gStrCfgStrtDesc;
+	}
+	public static String getGstrcfgstrtexp() {
+		return gStrCfgStrtExp;
+	}
+	public static String getGstrcfgstrtcur() {
+		return gStrCfgStrtCur;
+	}
+	public static String getGstrcfgstrtkpemp() {
+		return gStrCfgStrtKpEmp;
+	}
+	public static String getGstrcfgstrtinp() {
+		return gStrCfgStrtInp;
+	}
+	public static String getGstrcfgstrtext() {
+		return gStrCfgStrtExt;
+	}
 	public static String getGstrcfgdirnotfound() {
 		return gStrCfgDirNotFound;
 	}
@@ -153,6 +192,12 @@ public class global {
 	}
 	public static String getGstrcfgcfgemptyaddvalues() {
 		return gStrCfgCfgEmptyAddValues;
+	}
+	public static String getGstrpubkey() {
+		return gStrPubKey;
+	}
+	public static String getGstrprvkey() {
+		return gStrPrvKey;
 	}
 	
 }

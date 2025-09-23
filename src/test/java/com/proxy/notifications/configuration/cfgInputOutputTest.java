@@ -21,14 +21,14 @@ import jakarta.validation.constraints.AssertTrue;
 
 class cfgInputOutputTest {
 
-	cfgInputOutput tstCfg;
+	CfgInputOutput tstCfg;
 	Path tstFolder = Paths.get(System.getProperty("user.dir"),"JUnit");
 	Path fileTxt = Paths.get(System.getProperty("user.dir"),"JUnit","testtext.txt");
 	Path fileIni = Paths.get(System.getProperty("user.dir"),"JUnit","test.ini");
 	Path fileUser = Paths.get(System.getProperty("user.dir"),"JUnit","testUser.csv");
 	@BeforeEach
 	void setUp() throws Exception {
-		tstCfg = new cfgInputOutput();
+		tstCfg = new CfgInputOutput();
 		try {
 			
 			Files.delete(fileUser);
@@ -50,7 +50,7 @@ class cfgInputOutputTest {
 
 	@Test
 	void testCreateFile() {
-		assertTrue(cfgInputOutput.createFile(tstFolder.toString(), "testtext.txt"));
+		assertTrue(CfgInputOutput.createFile(tstFolder.toString(), "testtext.txt"));
 		try {
 			Files.deleteIfExists(fileTxt);
 		} catch (IOException e) {
@@ -60,14 +60,14 @@ class cfgInputOutputTest {
 
 	@Test
 	void testBlankIni() {
-		cfgInputOutput.createFile(tstFolder.toString(), "test.ini");
-		assertTrue(cfgInputOutput.blankIni(tstFolder.toString(), "test.ini"));
+		CfgInputOutput.createFile(tstFolder.toString(), "test.ini");
+		assertTrue(CfgInputOutput.blankIni(tstFolder.toString(), "test.ini"));
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	void testFillIni() {
-		cfgInputOutput.createFile(tstFolder.toString(), "test.ini");
+		CfgInputOutput.createFile(tstFolder.toString(), "test.ini");
 		//tstCfg.fillIni(tstFolder, "test.ini");
 		assertTrue(Files.exists(Paths.get(tstFolder.toString(), "test.ini")));
 		//fail("Not yet implemented");
@@ -80,40 +80,40 @@ class cfgInputOutputTest {
 
 	@Test
 	void testProps() {
-		cfgInputOutput.createFile(tstFolder.toString(), "test.ini");
-		cfgInputOutput.blankIni(tstFolder.toString(), "test.ini");
-		assertNull(cfgInputOutput.props(tstFolder.toString(),"test.ini").getProperty("url"));
+		CfgInputOutput.createFile(tstFolder.toString(), "test.ini");
+		CfgInputOutput.blankIni(tstFolder.toString(), "test.ini");
+		assertNull(CfgInputOutput.props(tstFolder.toString(),"test.ini").getProperty("url"));
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	void testAddUserFile() {
-		cfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
-		cfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
-		assertFalse(cfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv"));
+		CfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
+		CfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
+		assertFalse(CfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv"));
 		
 		//fail("Not yet implemented");
 	}
 
 	@Test
 	void testRemoveUserFile() {
-		cfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
-		cfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
-		assertTrue(cfgInputOutput.removeUserFile("max", tstFolder.toString(), "testUser.csv"));
+		CfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
+		CfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
+		assertTrue(CfgInputOutput.removeUserFile("max", tstFolder.toString(), "testUser.csv"));
 	}
 
 	@Test
 	void testExistsUserFile() {
-		cfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
-		cfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
-		assertTrue(cfgInputOutput.existsUserFile("max", "password", tstFolder.toString(), "testUser.csv"));
+		CfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
+		CfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
+		assertTrue(CfgInputOutput.existsUserFile("max", "password", tstFolder.toString(), "testUser.csv"));
 	}
 
 	@Test
 	void testGetUserList() {
-		cfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
-		cfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
-		assertEquals(1,cfgInputOutput.getUserList(tstFolder.toString(), "testUser.csv").size());
+		CfgInputOutput.createFile(tstFolder.toString(), "testUser.csv");
+		CfgInputOutput.addUserFile("max", "password", tstFolder.toString(), "testUser.csv");
+		assertEquals(1,CfgInputOutput.getUserList(tstFolder.toString(), "testUser.csv").size());
 		//fail("Not yet implemented");
 	}
 

@@ -1,49 +1,37 @@
 package com.proxy.notifications.errorNotifications.Controller;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proxy.notifications.configuration.cfgInputOutput;
-import com.proxy.notifications.errorNotifications.entity.notification;
-import com.proxy.notifications.errorNotifications.entity.settings;
-import com.proxy.notifications.errorNotifications.repository.notificationRepository;
-
-import lombok.RequiredArgsConstructor;
+import com.proxy.notifications.configuration.CfgInputOutput;
+import com.proxy.notifications.errorNotifications.entity.Notification;
+import com.proxy.notifications.errorNotifications.repository.NotificationRepository;
 
 @RestController
-@RequiredArgsConstructor 
-public class notificationController {
-	@Autowired
-	notificationRepository notRep;
-	
-	@Autowired
-	settingsController sttCtr;
-	
-	@Autowired
+public class NotificationController {
+	NotificationRepository notRep;
+	SettingsController sttCtr;
 	CacheManager cacheMgr;
 	
+	public NotificationController(NotificationRepository notRep, SettingsController sttCtr, CacheManager cacheMgr) {
+		super();
+		this.notRep = notRep;
+		this.sttCtr = sttCtr;
+		this.cacheMgr = cacheMgr;
+	}
 
-	
-	public List<notification> iteratorToListNotification(Iterable<notification> tmpIterNotification,List<notification> tmpAllNotifications)
+	public List<Notification> iteratorToListNotification(Iterable<Notification> tmpIterNotification,List<Notification> tmpAllNotifications)
 	{
 
 		tmpAllNotifications = new ArrayList<>();
-		for (notification curNotification: tmpIterNotification) {
+		for (Notification curNotification: tmpIterNotification) {
 			tmpAllNotifications.add(curNotification);
 		}
 		return tmpAllNotifications;
@@ -52,12 +40,6 @@ public class notificationController {
 	@GetMapping("/set")
 	public String checkSettingsTimestampEqualsCache(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
-		
-		/*if ((strUsername == null) ||(strPassword == null)) {
-			return null;
-		}
-		if (checkUserExistsCache(strUsername, strPassword))
-		{*/
 			if(checkTimestampBigger6())
 			{
 				if (cacheMgr.getCache("sqlChkSet").get("normalKey",Boolean.class) == null)
@@ -91,19 +73,11 @@ public class notificationController {
 				}
 			}
 			return cacheMgr.getCache("settingsTimestamp").get("normalKey", String.class);
-		/*}else
-		{
-			return null;
-		}*/
 	}
+	
 	@GetMapping("/notTop1")
 	public String checkMostCurrentNotificationTimestampEqualsCache(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
-		/*if ((strUsername == null) ||(strPassword == null)) {
-			return null;
-		}
-		if (checkUserExistsCache(strUsername, strPassword))
-		{*/
 			if (cacheMgr.getCache("sqlChkNotTop1").get("normalKey",Boolean.class) == null)
 			{
 				cacheMgr.getCache("sqlChkNotTop1").put("normalKey",false);
@@ -145,17 +119,25 @@ public class notificationController {
 		}*/
 	}
 	@GetMapping("/notFin")
-	public List<notification> getNotificationsWhenFinished()
+	public List<Notification> getNotificationsWhenFinished()
 	{
 		return cacheMgr.getCache("notificationList").get("normalKey", ArrayList.class);
 	}
+	
+
+	
 	@GetMapping("/string")
 	public String getString()
 	{
 		return "hello";
 	}
+	public List<Notification> getnotificationsJWT()
+	{
+		return getNotifications(null, null);
+	}
+
 	@GetMapping("/notAll")
-	public List<notification> getNotifications(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
+	public List<Notification> getNotifications(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
 		/*if ((strUsername == null) ||(strPassword == null)) {
 			return null;
@@ -174,8 +156,8 @@ public class notificationController {
 			}
 			boolean bolChkNotAllTop = cacheMgr.getCache("sqlChkNotAllTop").get("normalKey",Boolean.class);
 			boolean bolChkNotAllBottom = cacheMgr.getCache("sqlChkNotAllBottom").get("normalKey",Boolean.class);
-			Iterable<notification> iterNotification;
-			List<notification> allNotifications = cacheMgr.getCache("notificationList").get("normalKey", ArrayList.class);
+			Iterable<Notification> iterNotification;
+			List<Notification> allNotifications = cacheMgr.getCache("notificationList").get("normalKey", ArrayList.class);
 			if ((allNotifications == null) && (!bolChkNotAllTop)) {
 				//System.out.println("nots null. filling");
 				bolChkNotAllTop = true;
@@ -235,7 +217,7 @@ public class notificationController {
 	public boolean checkUserListExistsCache() {
 		try {
 			if (cacheMgr.getCache("userList").get("normalKey") == null) {
-				cacheMgr.getCache("userList").put("normalKey",cfgInputOutput.getUserList(Paths.get(System.getProperty("user.dir"),"configuration").toString(),"userlist.csv"));
+				cacheMgr.getCache("userList").put("normalKey",CfgInputOutput.getUserList(Paths.get(System.getProperty("user.dir"),"configuration").toString(),"userlist.csv"));
 				return true;
 			}else
 			{

@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-public class notification {
+public class Notification {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

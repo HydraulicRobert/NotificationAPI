@@ -1,0 +1,4 @@
+keytool -genkey -alias dataflow -keyalg RSA -keystore dataflow.keystore \
+          -validity 3650 -storetype JKS \
+          -dname "CN=localhost, OU=Spring, O=Pivotal, L=Kailua-Kona, ST=HI, C=US"  
+          -keypass dataflow -storepass dataflow

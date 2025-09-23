@@ -9,14 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 
-import com.proxy.notifications.configuration.cfgInputOutput;
-import com.proxy.notifications.configuration.global;
-import com.proxy.notifications.configuration.startArgs;
+import com.proxy.notifications.configuration.CfgInputOutput;
+import com.proxy.notifications.configuration.StartArgs;
+import com.proxy.notifications.configuration.variable.Global;
+import com.proxy.notifications.jwt.RsaKeyProperties;
 
+@EnableConfigurationProperties(RsaKeyProperties.class)
 @SpringBootApplication(scanBasePackages={"com.proxy.notifications"}
-		,exclude = {SecurityAutoConfiguration.class}
+		//,exclude = {SecurityAutoConfiguration.class}
 )
 @AutoConfigureBefore(CacheAutoConfiguration.class)
 @EnableCaching
@@ -24,18 +27,18 @@ public class NotificationsApplication {
 	
 	public static void main(String[] args) {
 		//cfgInputOutput CfgInputOutput = new cfgInputOutput();
-		String strCfgPath = global.getGstrcfgpath();
-		String strFileName = global.getGstruserlist();
-		String strCfgName = global.getGstrcfgname();
-		startArgs strtArgs = new startArgs();
+		String strCfgPath = Global.getGstrcfgpath();
+		String strFileName = Global.getGstruserlist();
+		String strCfgName = Global.getGstrcfgname();
+		StartArgs strtArgs = new StartArgs();
        // List<String[]> stlArgsList = strtArgs.getStlArgsList();
-		cfgInputOutput.createFile(strCfgPath, strFileName);
+		CfgInputOutput.createFile(strCfgPath, strFileName);
 		if (args.length <= 0) {
 			try {
 				new SpringApplicationBuilder(NotificationsApplication.class)
-		        .properties(cfgInputOutput.props(
-		        		global.getGstrcfgpath(), 
-						global.getGstrcfgname()
+		        .properties(CfgInputOutput.props(
+		        		Global.getGstrcfgpath(), 
+						Global.getGstrcfgname()
 						))
 		        .web(WebApplicationType.SERVLET)
 		        .build()
@@ -47,15 +50,10 @@ public class NotificationsApplication {
 				while(i == 0) {
 					
 				}
-				//cfgInputOutput.blankIni(strCfgPath, strCfgName);
-				//cfgInputOutput.fillIni(global.getGstrcfgpath(), global.getGstrcfgname());
 			}
 		}else {
 			strtArgs.pickStartArgs(args);
-		}
-		
-		//add
-		
+		}		
 			
 		
 	}

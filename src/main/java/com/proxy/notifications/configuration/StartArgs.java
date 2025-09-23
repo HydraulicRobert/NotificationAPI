@@ -3,16 +3,18 @@ package com.proxy.notifications.configuration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class startArgs {
+import com.proxy.notifications.configuration.variable.Global;
+
+public class StartArgs {
 	private List<String[]> stlArgsList;
-	public startArgs()
+	public StartArgs()
 	{
 		stlArgsList = new ArrayList<String[]>();
-		stlArgsList.add(global.getGstrnotadduser());
-	    stlArgsList.add(global.getGstrnotremoveuser());
-	    stlArgsList.add(global.getGstrnotshowuser());
-	    stlArgsList.add(global.getGstrnotconfigure());
-	    stlArgsList.add(global.getGstrnothelp());
+		stlArgsList.add(Global.getGstrnotadduser());
+	    stlArgsList.add(Global.getGstrnotremoveuser());
+	    stlArgsList.add(Global.getGstrnotshowuser());
+	    stlArgsList.add(Global.getGstrnotconfigure());
+	    stlArgsList.add(Global.getGstrnothelp());
 	}
 	
 	public void pickStartArgs(String[] args)
@@ -27,7 +29,7 @@ public class startArgs {
 					addUser(args);
 				}else
 				{
-					System.out.println(global.getGstrnotargumentsamount()+stlArgsList.get(0)[3]);
+					System.out.println(Global.getGstrnotargumentsamount()+stlArgsList.get(0)[3]);
 				}
 			}else 
 			//remove
@@ -39,7 +41,7 @@ public class startArgs {
 					removeUser(args);
 				}else
 				{
-					System.out.println(global.getGstrnotargumentsamount()+stlArgsList.get(1)[3]);
+					System.out.println(Global.getGstrnotargumentsamount()+stlArgsList.get(1)[3]);
 				}
 			}else 
 			//show
@@ -51,7 +53,7 @@ public class startArgs {
 					showUsers(args);
 				}else
 				{
-					System.out.println(global.getGstrnotargumentsamount()+stlArgsList.get(2)[3]);
+					System.out.println(Global.getGstrnotargumentsamount()+stlArgsList.get(2)[3]);
 				}
 			}else
 			//config
@@ -69,7 +71,7 @@ public class startArgs {
 					help(args, stlArgsList);
 				}else
 				{
-					System.out.println(global.getGstrnotargumentsamount()+stlArgsList.get(4)[3]);
+					System.out.println(Global.getGstrnotargumentsamount()+stlArgsList.get(4)[3]);
 				}
 			}
 	}
@@ -77,21 +79,21 @@ public class startArgs {
 	private boolean addUser(String[] args)
 	{
 		boolean userCreated = false;
-		String strCfgPath = global.getGstrcfgpath();
-		String strFileName = global.getGstruserlist();
-		if (!cfgInputOutput.createFile(strCfgPath, strFileName))
+		String strCfgPath = Global.getGstrcfgpath();
+		String strFileName = Global.getGstruserlist();
+		if (!CfgInputOutput.createFile(strCfgPath, strFileName))
 		{
-			System.out.println(global.getGstrnotfldduserfilecreate());
+			System.out.println(Global.getGstrnotfldduserfilecreate());
 		}else {
-			System.out.println(global.getGstrnotuserfilecreate());
+			System.out.println(Global.getGstrnotuserfilecreate());
 		}
-		cfgInputOutput.addUserFile(args[1],args[2],strCfgPath,strFileName);
+		CfgInputOutput.addUserFile(args[1],args[2],strCfgPath,strFileName);
 		userCreated = true;
 		return userCreated;
 	}
 	private boolean removeUser(String[] args)
 	{
-		if(cfgInputOutput.removeUserFile(args[1], global.getGstrcfgpath(), global.getGstruserlist()))
+		if(CfgInputOutput.removeUserFile(args[1], Global.getGstrcfgpath(), Global.getGstruserlist()))
 		{
 			return true;
 		}else
@@ -102,13 +104,13 @@ public class startArgs {
 	}
 	private void config()
 	{
-		cfgInputOutput.fillIni(global.getGstrcfgpath(), global.getGstrcfgname());
+		CfgInputOutput.fillIni(Global.getGstrcfgpath(), Global.getGstrcfgname());
 	}
 	private void showUsers(String[] args)
 	{
-		List<String[]> userList = cfgInputOutput.getUserList(global.getGstrcfgpath(), global.getGstruserlist());
+		List<String[]> userList = CfgInputOutput.getUserList(Global.getGstrcfgpath(), Global.getGstruserlist());
 		for (int i = 0; i<userList.size();i++) {
-			System.out.println(global.getGstrnotshowusersname()+userList.get(i)[0]+global.getGstrnotshowuserspassword()+userList.get(i)[1]+"';");
+			System.out.println(Global.getGstrnotshowusersname()+userList.get(i)[0]+Global.getGstrnotshowuserspassword()+userList.get(i)[1]+"';");
 		}
 	}
 	private void help(String[] args, List<String[]> stlArgsList)

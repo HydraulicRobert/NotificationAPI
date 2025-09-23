@@ -19,27 +19,27 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.proxy.notifications.errorNotifications.entity.settings;
+import com.proxy.notifications.errorNotifications.entity.Settings;
 
 @ExtendWith(MockitoExtension.class)
 class settingsRepositoryTest {
 	@Mock
-	private settingsRepository tstSttRep;
+	private SettingsRepository tstSttRep;
 	@Mock
-	private settings tstStt;
+	private Settings tstStt;
 	@Mock
-	private settings tstStt2;
+	private Settings tstStt2;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		tstSttRep = mock(settingsRepository.class,RETURNS_SMART_NULLS);
-		tstStt = mock(settings.class, RETURNS_SMART_NULLS);
-		tstStt2 = mock(settings.class, RETURNS_SMART_NULLS);
+		tstSttRep = mock(SettingsRepository.class,RETURNS_SMART_NULLS);
+		tstStt = mock(Settings.class, RETURNS_SMART_NULLS);
+		tstStt2 = mock(Settings.class, RETURNS_SMART_NULLS);
 	}
 
 	@Test
 	void testFindTop1() {
-		tstStt = new settings();
+		tstStt = new Settings();
 		tstStt.setId(0);
 		tstStt.setLastChangeBy("kevin");
 		tstStt.setLastChangeOn("2025-01-01 23:00:01");
@@ -49,7 +49,7 @@ class settingsRepositoryTest {
 	
 	@Test
 	void testFindTopNoContent() {
-		tstStt = new settings();
+		tstStt = new Settings();
 		when(tstSttRep.findTop1By()).thenReturn(tstStt);
 		assertNotNull(tstSttRep.findTop1By().getId());
 		assertNull(tstSttRep.findTop1By().getLastChangeBy());
@@ -64,26 +64,26 @@ class settingsRepositoryTest {
 	
 	@Test
 	void testFindAllObject() {
-		tstStt = new settings();
+		tstStt = new Settings();
 		tstStt.setId(0);
 		tstStt.setLastChangeBy("kevin");
 		tstStt.setLastChangeOn("2025-01-01 23:00:01");
-		tstStt2 = new settings();
+		tstStt2 = new Settings();
 		tstStt2.setId(1);
 		tstStt2.setLastChangeBy("max");
 		tstStt2.setLastChangeOn("2026-01-01 23:00:01");
-		List<settings> itlSettings = new ArrayList<>();
+		List<Settings> itlSettings = new ArrayList<>();
 		itlSettings.add(tstStt);
 		itlSettings.add(tstStt2);
 		when(tstSttRep.findAll()).thenReturn(itlSettings);
-		List<settings> objectList = (List<settings>)tstSttRep.findAll();
+		List<Settings> objectList = (List<Settings>)tstSttRep.findAll();
 		assertEquals(objectList, tstSttRep.findAll());
 	}
 	@Test
 	void testFindAllObjectNone() {
-		List<settings> itlSettings = new ArrayList<>();
+		List<Settings> itlSettings = new ArrayList<>();
 		when(tstSttRep.findAll()).thenReturn(itlSettings);
-		List<settings> objectList = (List<settings>)tstSttRep.findAll();
+		List<Settings> objectList = (List<Settings>)tstSttRep.findAll();
 		assertThat(objectList.isEmpty());
 	}
 

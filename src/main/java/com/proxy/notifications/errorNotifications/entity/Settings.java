@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class settings {
+public class Settings {
 	public String getLastChangeOn() {
 		return lastChangeOn;
 	}

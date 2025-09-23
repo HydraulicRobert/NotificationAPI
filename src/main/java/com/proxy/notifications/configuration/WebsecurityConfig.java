@@ -1,103 +1,89 @@
 package com.proxy.notifications.configuration;
 
 
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+//import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+//import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.filter.CommonsRequestLoggingFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import com.proxy.notifications.filter.JwtAuthenticationFilter;
+import com.proxy.notifications.filter.PostFilterLogFilter;
+import com.proxy.notifications.jwt.JwtUtils;
 @Configuration
 @EnableWebSecurity
-public class websecurityConfig {
-
+public class WebsecurityConfig {
+	private final JwtUtils jwtUtils;
+	private JwtAuthenticationFilter jwtAuthFilter;
+	private PostFilterLogFilter postFilterLogFilter;
+	private final UserDetailsService userDetailsService;
+	/*private final RsaKeyProperties rsaKeyProperties;
+	@Value("${spring.security.oauth2.client.registration.github.client-id}")
+	private String clientId;
+	@Value("${spring.security.oauth2.client.registration.github.client-secret}")
+	private String clientSecret;*/
+	public WebsecurityConfig(
+			//RsaKeyProperties rsaKeyProperties, 
+			JwtUtils jwtUtils, 
+			UserDetailsService userDetailsService,
+			JwtAuthenticationFilter jwtAuthenticationFilter) {
+		//this.rsaKeyProperties = rsaKeyProperties;
+		this.jwtUtils = jwtUtils;
+		this.userDetailsService = userDetailsService;
+		this.jwtAuthFilter = new JwtAuthenticationFilter(jwtUtils, userDetailsService);
+		this.postFilterLogFilter = new PostFilterLogFilter();
+	}
+	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		System.out.println("filter");
-		
+	@Order(1)
+	public SecurityFilterChain securityFilterChain(
+			HttpSecurity http
+			//,OAuth2AuthorizedClientService clientService
+			) throws Exception {
 		http
 			.csrf(csrf -> csrf.disable())
 	   		.authorizeHttpRequests(auth -> auth
-	   				.anyRequest()
-	   				.hasRole("USER")
-//	   				.permitAll()
+	   				.requestMatchers("/","/login","/default-ui.css","/favicon.ico","/error").permitAll()
+	   				.anyRequest().authenticated()
 	   				)
-	   		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	   		.authenticationProvider(authenticationProvider(users(), passwordEncoder()))
-	   		.httpBasic(Customizer.withDefaults())
+	   		.sessionManagement(session -> session
+	   				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	   				)
+	   		.authenticationProvider(
+	   				authenticationProvider(
+	   						userDetailsService, 
+	   						passwordEncoder()
+	   				)
+	   		)
+	   		.addFilterBefore(jwtAuthFilter, AbstractPreAuthenticatedProcessingFilter.class)
+	   		.addFilterAfter(postFilterLogFilter, AbstractPreAuthenticatedProcessingFilter.class)
 	   		;
-	   		
-//	   		
-//	   		
-//	   		.authenticationManager(authenticationManager(null));
 
 		return http.build();
 
 	}
-	
+
 	@Bean
     public DefaultAuthenticationEventPublisher authenticationEventPublisher() {
         return new DefaultAuthenticationEventPublisher();
     }	
 	
-	@Bean
-	public UserDetailsService users() {
-		cfgInputOutput chkIOUser = new cfgInputOutput();
-		String strCfgPath = global.getGstrcfgpath();
-		String strFileName = global.getGstruserlist();
-		List<String[]> userListString = cfgInputOutput.getUserList(strCfgPath,strFileName);
-		UserBuilder users = User.builder();
-		List<UserDetails> userList = new ArrayList<>();
-		for(int i = 0;i<userListString.size();i++)
-		{
-			userList.add(users
-					.username(userListString.get(i)[0])
-					.password(userListString.get(i)[1])
-					.roles("USER")
-					.build());
-		}
-		/*UserDetails user = users
-				.username("user")
-				.password(passwordEncoder().encode("password"))
-				.roles("USER")
-				.build();
-		UserDetails admin = users
-				.username("admin")
-				.password(passwordEncoder().encode("password"))
-				.roles("USER","ADMIN")
-				.build();*/
-		return new InMemoryUserDetailsManager(userList);
-	}
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
@@ -121,6 +107,20 @@ public class websecurityConfig {
 		return daoAuthenticationProvider;
 	}
 	
+	/*@Bean
+	JwtDecoder jwtDecoder() {
+		return NimbusJwtDecoder
+				.withPublicKey(rsaKeyProperties.publicKey())
+				.build();
+	}
+	
+	@Bean
+	JwtEncoder jwtEncoder() {
+		JWK jwk = new RSAKey.Builder(rsaKeyProperties.publicKey()).privateKey(rsaKeyProperties.privateKey()).build();
+		JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+		return new NimbusJwtEncoder(jwks);
+	}*/
+	
 	@Bean
 	public CacheManager cacheManager() {
 		ConcurrentMapCacheManager manager = new ConcurrentMapCacheManager();
@@ -135,7 +135,8 @@ public class websecurityConfig {
 											"settingsTimestamp",
 											"mostCurrentNotificationTimestamp",
 											"mostCurrentNotificationTimestampAll",
-											"userList"));
+											"userList",
+											"userTokenCache"));
 		return manager;
 	}
 }

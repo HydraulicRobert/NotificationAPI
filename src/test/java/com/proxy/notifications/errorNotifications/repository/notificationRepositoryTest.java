@@ -14,62 +14,62 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import com.proxy.notifications.errorNotifications.entity.notification;
-import com.proxy.notifications.errorNotifications.entity.settings;
+import com.proxy.notifications.errorNotifications.entity.Notification;
+import com.proxy.notifications.errorNotifications.entity.Settings;
 
 class notificationRepositoryTest {
 
 	@Mock
-	notificationRepository ntRep;
+	NotificationRepository ntRep;
 	@Mock
-	notification nt;
+	Notification nt;
 	@Mock
-	notification nt2;
+	Notification nt2;
 	
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		 ntRep 	= mock(notificationRepository.class,RETURNS_SMART_NULLS);
-		 nt		= mock(notification.class,RETURNS_SMART_NULLS);
-		 nt2	= mock(notification.class,RETURNS_SMART_NULLS);
+		 ntRep 	= mock(NotificationRepository.class,RETURNS_SMART_NULLS);
+		 nt		= mock(Notification.class,RETURNS_SMART_NULLS);
+		 nt2	= mock(Notification.class,RETURNS_SMART_NULLS);
 	}
 
 	@Test
 	void testFindAllByOrderByStartDateDesc() {
-		nt = new notification();
+		nt = new Notification();
 		nt.setAffected("machine");
 		nt.setEndDate("2025-01-01 23:00:01");
 		nt.setProblem("broken");
 		nt.setSeverity(2);
 		nt.setStartDate("2024-01-01 23:00:01");
-		nt2 = new notification();
+		nt2 = new Notification();
 		nt2.setAffected("machine");
 		nt2.setEndDate("2025-01-01 23:00:01");
 		nt2.setProblem("broken");
 		nt2.setSeverity(2);
 		nt2.setStartDate("2024-01-01 23:00:01");
-		List<notification> lstNots = new ArrayList<>();
+		List<Notification> lstNots = new ArrayList<>();
 		lstNots.add(nt);
 		lstNots.add(nt2);
-		Iterable<notification> objectList = (List<notification>)lstNots;
+		Iterable<Notification> objectList = (List<Notification>)lstNots;
 		when(ntRep.findAllByOrderByStartDateDesc()).thenReturn(objectList);
 		assertEquals(lstNots, ntRep.findAllByOrderByStartDateDesc());
 	}
 	@Test
 	void testFindAllByOrderByStartDateDescEmptyObjects() {
-		nt = new notification();
-		nt2 = new notification();
-		List<notification> lstNots = new ArrayList<>();
+		nt = new Notification();
+		nt2 = new Notification();
+		List<Notification> lstNots = new ArrayList<>();
 		lstNots.add(nt);
 		lstNots.add(nt2);
-		Iterable<notification> objectList = (List<notification>)lstNots;
+		Iterable<Notification> objectList = (List<Notification>)lstNots;
 		when(ntRep.findAllByOrderByStartDateDesc()).thenReturn(objectList);
 		assertEquals(lstNots, ntRep.findAllByOrderByStartDateDesc());
 	}
 
 	@Test
 	void testFindTop1ByOrderByStartDateDesc() {
-		nt = new notification();
+		nt = new Notification();
 		nt.setAffected("machine");
 		nt.setEndDate("2025-01-01 23:00:01");
 		nt.setProblem("broken");
@@ -80,7 +80,7 @@ class notificationRepositoryTest {
 	}
 	@Test
 	void testFindTop1ByOrderByStartDateDescEmptyObject() {
-		nt = new notification();
+		nt = new Notification();
 		when(ntRep.findTop1ByOrderByStartDateDesc()).thenReturn(nt);
 		assertThat(ntRep.findTop1ByOrderByStartDateDesc().equals(nt));
 	}

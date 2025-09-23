@@ -14,31 +14,31 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.cache.CacheManager;
 
-import com.proxy.notifications.errorNotifications.entity.notification;
-import com.proxy.notifications.errorNotifications.repository.notificationRepository;
+import com.proxy.notifications.errorNotifications.entity.Notification;
+import com.proxy.notifications.errorNotifications.repository.NotificationRepository;
 
 class notificationControllerTest {
 
-	notificationController ntCon;
+	NotificationController ntCon;
 	
 	@Mock
 	CacheManager cachMgr;
 	
 	@Mock
-	notificationRepository ntRep;
+	NotificationRepository ntRep;
 	
 	@Mock
-	notification nt;
+	Notification nt;
 	
 	@Mock
-	notification nt2;
+	Notification nt2;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		ntCon 	= new notificationController();
-		ntRep 	= mock(notificationRepository.class, RETURNS_SMART_NULLS);
-		nt		= mock(notification.class, RETURNS_SMART_NULLS);
-		nt2		= mock(notification.class, RETURNS_SMART_NULLS);
+		ntCon 	= new NotificationController(ntRep, null, cachMgr);
+		ntRep 	= mock(NotificationRepository.class, RETURNS_SMART_NULLS);
+		nt		= mock(Notification.class, RETURNS_SMART_NULLS);
+		nt2		= mock(Notification.class, RETURNS_SMART_NULLS);
 		cachMgr	= mock(CacheManager.class,RETURNS_SMART_NULLS);
 		ntCon.notRep = ntRep;
 	}
@@ -55,11 +55,11 @@ class notificationControllerTest {
 		when(nt2.getProblem()).thenReturn("probb");
 		when(nt2.getSeverity()).thenReturn(3);
 		when(nt2.getStartDate()).thenReturn("2024b");
-		List<notification> lstNots = new ArrayList<>();
-		List<notification> lstNotsTRS = new ArrayList<>();
+		List<Notification> lstNots = new ArrayList<>();
+		List<Notification> lstNotsTRS = new ArrayList<>();
 		lstNots.add(nt);
 		lstNots.add(nt2);
-		Iterable<notification> objectList = (List<notification>)lstNots;
+		Iterable<Notification> objectList = (List<Notification>)lstNots;
 		//when(ntCon.iteratorToListNotification(objectList, lstNotsTRS)).thenReturn(lstNots);
 		assertThat(ntCon.iteratorToListNotification(objectList, lstNotsTRS).get(0).equals(nt));
 	}

@@ -16,35 +16,38 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.CacheManager;
 
-import com.proxy.notifications.errorNotifications.entity.settings;
-import com.proxy.notifications.errorNotifications.repository.settingsRepository;
+import com.proxy.notifications.errorNotifications.entity.Settings;
+import com.proxy.notifications.errorNotifications.repository.SettingsRepository;
 
 
 @ExtendWith(MockitoExtension.class)
 class settingsControllerTest {
 
+	@Mock
+	private CacheManager tstCacheMgr;
 
-	private settingsController tstSttCon;
+	private SettingsController tstSttCon;
 	@Mock
-	private settingsRepository tstSttRep;
+	private SettingsRepository tstSttRep;
 	@Mock
-	private settings tstStt;
+	private Settings tstStt;
 	@Mock
-	private settings tstStt2;
+	private Settings tstStt2;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		tstSttCon = new settingsController();
-		tstSttRep = mock(settingsRepository.class, RETURNS_SMART_NULLS);
+		tstSttCon = new SettingsController(tstSttRep, tstCacheMgr);
+		tstSttRep = mock(SettingsRepository.class, RETURNS_SMART_NULLS);
 		tstSttCon.sttRep = tstSttRep;
-		tstStt = mock(settings.class, RETURNS_SMART_NULLS);
-		tstStt2 = mock(settings.class, RETURNS_SMART_NULLS);
+		tstStt = mock(Settings.class, RETURNS_SMART_NULLS);
+		tstStt2 = mock(Settings.class, RETURNS_SMART_NULLS);
 	}
 
 	@Test
 	void testFindTop1() {
-		tstStt = new settings();
+		tstStt = new Settings();
 		tstStt.setLastChangeBy("kevin");
 		tstStt.setLastChangeOn("2025-01-01 23:00:01");
 		when(tstSttRep.findTop1By()).thenReturn(tstStt);
@@ -52,7 +55,7 @@ class settingsControllerTest {
 	}
 	@Test
 	void testFindTop1EmptyObject() {
-		tstStt = new settings();
+		tstStt = new Settings();
 		when(tstSttRep.findTop1By()).thenReturn(tstStt);
 		assertEquals(0,tstSttCon.findTop1().getId());
 		assertNull(tstSttCon.findTop1().getLastChangeBy());
