@@ -26,7 +26,7 @@ Data is intelligently cached upon retrieval. Subsequent requests are served from
 
 ## **Database Experience Built for Speed**
 
-- Eliminates the need for VPNs, SSH tunnels, or third-party remote access tools—even from mobile devices.
+- Eliminates the need for additional tools to securely offer the data - even from mobile devices.
 - **Minimal performance overhead** on your primary database.
 
 ## **Flexible Integration**
