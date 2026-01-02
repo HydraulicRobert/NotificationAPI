@@ -25,7 +25,7 @@ First make sure that your Java system variable is set.
 
 -either start the server to create an empty ini file using "java -jar notification...snapshot.jar" 
 
--or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar notification...snapshot.jar -c"
+-or start it with the -c startcommand to use the servers inbuilt ini configuration, like "java -jar notification...snapshot.jar -c"
 
 -then add a user using "java -jar notification...snapshot.jar -a username password"
 
