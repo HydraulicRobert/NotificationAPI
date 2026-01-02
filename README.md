@@ -1,8 +1,8 @@
 ## Table of Contents
 - [About](#About)
 - [How to Use](#how-to-use)
-- [Endpoints] (#API-Endpoints)
-- [Start Args] (#start-args)
+- [Endpoints] (#Endpoints)
+- [Start Args] (#startparameters)
 - [Documentation](#documentation)
 - [License](#license)
 - [Contacts](#contacts)
@@ -27,7 +27,7 @@ First make sure that your Java system variable is set.
 
 ```
 
-## API-Endpoints
+## Endpoints
 
 ### Authentication
 
@@ -117,7 +117,7 @@ date time
 ```json
 date time
 ```
-## start-args
+## startparameters
 start args get called when starting the app, like
 ```shell
 java -jar appname.jar -command
@@ -154,5 +154,5 @@ coming soon
 ## license
 all rights reserved
 
-##contacts
+## contacts
 rotaszko@gmx.net
