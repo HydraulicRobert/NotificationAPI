@@ -1,11 +1,11 @@
 ## Table of Contents
-- [About](#-about)
-- [How to Use](#-how-to-use)
-- [Endpoints] (#-API-Endpoints)
-- [Start Args] (#-start-args)
-- [Documentation](#-documentation)
-- [License](#-license)
-- [Contacts](#-contacts)
+- [About](#About)
+- [How to Use](#how-to-use)
+- [Endpoints] (#API-Endpoints)
+- [Start Args] (#start-args)
+- [Documentation](#documentation)
+- [License](#license)
+- [Contacts](#contacts)
 ## About
 **dbProxy** is a java based database proxy that allows your database to be accessed from any authenticated device.
 Benefits include, but are not restricted to:
@@ -148,9 +148,6 @@ add a new user. password gets hashed once entered
 -a username password or --add username password
 ```
 
-- [Documentation](#-documentation)
-- [License](#-license)
-- [Contacts](#-contacts)
 ## documentation
 coming soon
 
