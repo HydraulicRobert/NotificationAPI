@@ -18,12 +18,16 @@ The server also comes with a React based frontend in a different repository. Soo
 ## how-to-use
 First make sure that your Java system variable is set. 
 ```shell
-#Open a terminal
-#use gradle to build the jar using "gradlew build"
-#navigate to the location of the jar.
-#either start the server to create an empty ini file using "java -jar appname.jar" 
-#or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar appname.jar -c"
-#then add a user using "java -jar appname.jar -a username password
+-Open a terminal
+-use gradle to build the jar using "gradlew build"
+
+-navigate to the location of the jar, which gets added as"build/libs/notification...snapshot.jar" after running gradle build
+
+-either start the server to create an empty ini file using "java -jar appname.jar" 
+
+-or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar appname.jar -c"
+
+-then add a user using "java -jar appname.jar -a username password
 
 ```
 
