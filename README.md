@@ -16,22 +16,29 @@ Benefits include, but are not restricted to:
 The server also comes with a React based frontend in a different repository. Soon i'll change it so that the jwt gets written into the cookies.
 
 ## how-to-use
-First make sure that your Java system variable is set. 
+
+make sure that your JAVA_HOME environment variable is set and java 17+ is installed.
+
+open a terminal
+
+navigate to the root directory of the project
+
+build the JAR using gradle
 ```shell
--Open a terminal
-
--use gradle to build the jar using "gradlew build" via a terminal in the root folder of the project
-
--navigate to the location of the jar, which gets added as"build/libs/dbProxy.jar" after running gradle build
-
--either start the server to create an empty ini file using "java -jar dbProxy.jar" 
-
--or start it with the -c startcommand to use the servers inbuilt ini configuration, like "java -jar dbProxy.jar -c"
-
--then add a user using "java -jar dbProxy.jar -a username password"
-
+./gradlew build
 ```
-
+after the build finishes, the JAR will be located at
+```shell
+build/libs/dbProxy.jar
+```
+start the server to generate a blank ini
+```shell
+java -jar dbProxy.jar
+```
+add a user with username and password
+```shell
+java -jar dbProxy.jar -a username password
+```
 ## Endpoints
 
 ### Authentication
