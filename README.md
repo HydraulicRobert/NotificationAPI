@@ -23,12 +23,13 @@ First make sure that your Java system variable is set.
 
 -navigate to the location of the jar, which gets added as"build/libs/notification...snapshot.jar" after running gradle build
 
--either start the server to create an empty ini file using "java -jar appname.jar" 
+-either start the server to create an empty ini file using "java -jar notification...snapshot.jar" 
 
--or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar appname.jar -c"
+-or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar notification...snapshot.jar -c"
 
--then add a user using "java -jar appname.jar -a username password
+-then add a user using "java -jar notification...snapshot.jar -a username password"
 
+IMPORTANT: notification...snapshot.jar is not the exact name. it will change depending on the programming progress
 ```
 
 ## Endpoints
