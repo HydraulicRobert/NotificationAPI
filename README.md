@@ -42,9 +42,9 @@ First make sure that your Java system variable is set.
 ### login
 
 #### POST login
-- **Methode:** `POST`
+- **Method:** `POST`
 - **Endpoint:** `login`
-- **Beschreibung:** returns a jwt upon successful authentication
+- **Description:** returns a jwt upon successful authentication
 - **Auth:** not required
 - **Body:**
 ```json
@@ -57,9 +57,9 @@ ey. . .
 ### notAll
 
 #### GET notAll
-- **Methode:** `GET`
+- **Method:** `GET`
 - **Endpoint:** `notAll`
-- **Beschreibung:** returns all cached notifications upon successful authorization
+- **Description:** returns all cached notifications upon successful authorization
 - **Auth:** required
 - **Header:**
 ```json
@@ -84,9 +84,9 @@ ey. . .
 ### notTop1
 
 #### GET notTop1
-- **Methode:** `GET`
+- **Method:** `GET`
 - **Endpoint:** `notTop1`
-- **Beschreibung:** returns the highest startdate among the notifications
+- **Description:** returns the highest startdate among the notifications
 - **Auth:** required
 - **Header:**
 ```json
@@ -102,9 +102,9 @@ date time
 ### set
 
 #### GET set
-- **Methode:** `GET`
+- **Method:** `GET`
 - **Endpoint:** `set`
-- **Beschreibung:** returns the settings datetime
+- **Description:** returns the settings datetime
 - **Auth:** required
 - **Header:**
 ```json
