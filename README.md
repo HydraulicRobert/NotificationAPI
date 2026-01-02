@@ -13,7 +13,7 @@ Benefits include, but are not restricted to:
 - **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
 - **Maintainability**: Thanks to the usage of Java and my programming any features can be added with ease
 
-The server also comes with a React based frontend in a different repository. 
+The server also comes with a React based frontend in a different repository. Soon i'll change it so that the jwt gets written into the cookies.
 
 ## how-to-use
 First make sure that your Java system variable is set. 
