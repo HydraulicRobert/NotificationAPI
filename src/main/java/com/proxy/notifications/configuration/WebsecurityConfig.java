@@ -2,6 +2,8 @@ package com.proxy.notifications.configuration;
 
 
 import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -23,6 +25,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.proxy.notifications.configuration.variable.Global;
 import com.proxy.notifications.filter.JwtAuthenticationFilter;
 import com.proxy.notifications.filter.PostFilterLogFilter;
 import com.proxy.notifications.jwt.JwtUtils;
@@ -57,7 +64,8 @@ public class WebsecurityConfig {
 			//,OAuth2AuthorizedClientService clientService
 			) throws Exception {
 		http
-			.csrf(csrf -> csrf.disable())
+		.cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
+		.csrf(csrf -> csrf.disable())
 	   		.authorizeHttpRequests(auth -> auth
 	   				.requestMatchers("/","/login","/default-ui.css","/favicon.ico","/error").permitAll()
 	   				.anyRequest().authenticated()
@@ -139,4 +147,18 @@ public class WebsecurityConfig {
 											"userTokenCache"));
 		return manager;
 	}
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration corsConfiguration = new CorsConfiguration();
+//	    corsConfiguration.setAllowedOrigins(List.of("http://0.0.0.0:5173","http://192.168.0.223:5173","http://localhost:5173"));
+	    corsConfiguration.setAllowedOrigins(CfgInputOutput.getCorsOrigin(Global.getGstrcfgpath(), Global.getGstrcfgname()));
+	    corsConfiguration.setAllowedMethods(List.of("GET", "POST"));
+	    corsConfiguration.setAllowCredentials(true);
+	    corsConfiguration.setAllowedHeaders(List.of("*"));
+	    corsConfiguration.setMaxAge(3600L);
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", corsConfiguration);
+	    return source;
+	}
+
 }

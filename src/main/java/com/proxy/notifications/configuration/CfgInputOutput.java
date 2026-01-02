@@ -25,6 +25,7 @@ import org.h2.Driver;
 import com.proxy.notifications.configuration.variable.Global;
 import com.proxy.notifications.jwt.JwtUtils;
 
+import io.jsonwebtoken.lang.Arrays;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -106,6 +107,7 @@ public class CfgInputOutput {
 			ini.put("Server", "logLevelSpring","");
 			ini.put("Server", "logLevelHibernate","");
 			ini.put("Server", "showSQLQueries","");
+			ini.put("Server", "AllowedOrigins","");
 			ini.store();
 			return true;
 		} catch (NullPointerException e1) {
@@ -165,6 +167,7 @@ public class CfgInputOutput {
 			stlArgsList.add(new String[] {"Server",		"logLevelRoot",		"global logging level",							"'OFF' = none; \n'FATAL' = only fatal; \n'ERROR' = only error; \n'WARN' = only warnings; \n'INFO' = only information messages; \n'DEBUG' = detailled debug messages; \n'TRACE' = detailled general informations; \n'ALL' = everything",ini.get("Server","logLevelRoot")});
 			stlArgsList.add(new String[] {"Server",		"logLevelSpring",	"spring web related logging level",				"'OFF' = none; \n'FATAL' = only fatal; \n'ERROR' = only error; \n'WARN' = only warnings; \n'INFO' = only information messages; \n'DEBUG' = detailled debug messages; \n'TRACE' = detailled general informations; \n'ALL' = everything",ini.get("Server","logLevelSpring")});
 			stlArgsList.add(new String[] {"Server",		"logLevelHibernate","Hibernate related logging level",				"'OFF' = none; \n'FATAL' = only fatal; \n'ERROR' = only error; \n'WARN' = only warnings; \n'INFO' = only information messages; \n'DEBUG' = detailled debug messages; \n'TRACE' = detailled general informations; \n'ALL' = everything",ini.get("Server","logLevelHibernate")});			
+			stlArgsList.add(new String[] {"Server",		"AllowedOrigins",	"Frontend IPs and Ports. Comma seperated",		"http://0.0.0.0:5173,http://192.168.0.123:5173, http://localhost:5173"});			
 			for(int i = 0; i<stlArgsList.size();i++)
 			{
 				String[] stlLine = stlArgsList.get(i);
@@ -488,4 +491,29 @@ public class CfgInputOutput {
 		DateTimeFormatter datetimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		System.out.println(LocalDateTime.now().format(datetimeFormat)+";"+strMIp+";"+strMMethod+";"+strMUri+";"+strMName+";"+strMAuthenticated);
 	}
+	public static List<String> getCorsOrigin(
+			String strPath, 
+			String strFilename) 
+	{
+		Ini ini;
+		List<String> strLstCorsOrigin = new ArrayList<String>();
+		try {
+			String strDirPath = strPath;
+			String strFileName = strFilename;
+			String strFilePath = Paths.get(
+											strDirPath, 
+											strFileName
+											).toString();
+			ini = new Ini(new File( strFilePath));
+			String iniS = ini.get("Server", "AllowedOrigins");
+			strLstCorsOrigin = Arrays.asList(iniS.split(","));
+			System.out.println(strLstCorsOrigin);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return strLstCorsOrigin;
+	}
+
+
 }
