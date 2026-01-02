@@ -5,7 +5,6 @@
 - [Start Args](#startparameters)
 - [Documentation](#documentation)
 - [License](#license)
-- [Contacts](#contacts)
 ## About
 **dbProxy** is a java based database proxy that allows your database to be accessed from any authenticated device.
 Benefits include, but are not restricted to:
@@ -165,6 +164,3 @@ coming soon
 
 ## license
 all rights reserved
-
-## contacts
-rotaszko@gmx.net
