@@ -19,7 +19,8 @@ The server also comes with a React based frontend in a different repository. Soo
 First make sure that your Java system variable is set. 
 ```shell
 -Open a terminal
--use gradle to build the jar using "gradlew build"
+
+-use gradle to build the jar using "gradlew build" via a terminal in the root folder of the project
 
 -navigate to the location of the jar, which gets added as"build/libs/notification...snapshot.jar" after running gradle build
 
