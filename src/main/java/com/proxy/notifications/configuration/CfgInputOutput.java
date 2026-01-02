@@ -507,7 +507,7 @@ public class CfgInputOutput {
 			ini = new Ini(new File( strFilePath));
 			String iniS = ini.get("Server", "AllowedOrigins");
 			strLstCorsOrigin = Arrays.asList(iniS.split(","));
-			System.out.println(strLstCorsOrigin);
+			//System.out.println(strLstCorsOrigin);
 		} catch (Exception e) {
 			
 			e.printStackTrace();

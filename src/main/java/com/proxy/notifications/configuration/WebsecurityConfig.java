@@ -154,7 +154,7 @@ public class WebsecurityConfig {
 	    corsConfiguration.setAllowedOrigins(CfgInputOutput.getCorsOrigin(Global.getGstrcfgpath(), Global.getGstrcfgname()));
 	    corsConfiguration.setAllowedMethods(List.of("GET", "POST"));
 	    corsConfiguration.setAllowCredentials(true);
-	    corsConfiguration.setAllowedHeaders(List.of("*"));
+	    corsConfiguration.setAllowedHeaders( List.of("Authorization", "Content-Type"));
 	    corsConfiguration.setMaxAge(3600L);
 	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 	    source.registerCorsConfiguration("/**", corsConfiguration);
