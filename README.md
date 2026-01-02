@@ -1,8 +1,8 @@
 ## Table of Contents
 - [About](#About)
 - [How to Use](#how-to-use)
-- [Endpoints] (#Endpoints)
-- [Start Args] (#startparameters)
+- [Endpoints](#Endpoints)
+- [Start Args](#startparameters)
 - [Documentation](#documentation)
 - [License](#license)
 - [Contacts](#contacts)
@@ -15,7 +15,7 @@ Benefits include, but are not restricted to:
 
 The server also comes with a React based frontend in a different repository. 
 
-##how-to-use
+## how-to-use
 First make sure that your Java system variable is set. 
 ```shell
 #Open a terminal
