@@ -1,41 +1,161 @@
-# *dbProxy: Secure, High-Performance Database Proxy*
+## Table of Contents
+- [About](#-about)
+- [How to Use](#-how-to-use)
+- [Endpoints] (#-API-Endpoints)
+- [Start Args] (#-start-args)
+- [Documentation](#-documentation)
+- [License](#-license)
+- [Contacts](#-contacts)
+## About
+**dbProxy** is a java based database proxy that allows your database to be accessed from any authenticated device.
+Benefits include, but are not restricted to:
+- **Availability**: Thanks to caching the database won't be overwhelmed by the amount of people accessing it
+- **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
+- **Maintainability**: Thanks to the usage of Java and my programming any features can be added with ease
 
+The server also comes with a React based frontend in a different repository. 
 
-dbProxy is a cross-platform server that serves as an intelligent intermediary between your database and the public internet. It delivers robust caching and authentication capabilities **without compromising the performance of critical database operations.**
+##how-to-use
+First make sure that your Java system variable is set. 
+```shell
+#Open a terminal
+#use gradle to build the jar using "gradlew build"
+#navigate to the location of the jar.
+#either start the server to create an empty ini file using "java -jar appname.jar" 
+#or start it with the -c startcommand to use the server's inbuilt ini configuration, like "java -jar appname.jar -c"
+#then add a user using "java -jar appname.jar -a username password
 
-It supports any database with a JDBC driver, including but not limited to Oracle, PostgreSQL, Microsoft SQL Server, and MySQL. dbProxy runs on any platform that supports Java applications or containerization (Docker/Kubernetes).
+```
 
-## **Why Choose dbProxy?**
+## API-Endpoints
 
-dbProxy addresses the core challenge of enabling secure, authorized remote access to your database—without exposing it directly to the internet.
+### Authentication
 
-## **Performance Benefits**
+| Method | Endpoint | Description |
+|-------|---------|-------------|
+| POST | `/login` | receive a jwt on successful authentication |
+| GET | `/notAll` | get all notifications |
+| GET | `/notTop1` | get most current startdate of notifications |
+| GET | `/set` | get settings last save action datetime|
 
-Unlike cloud-dependent solutions, dbProxy **runs locally on your network**, on any device with database access. This ensures reliable operation **even without internet connectivity**, minimizing latency and eliminating external dependencies.
+---
+### login
 
+#### POST login
+- **Methode:** `POST`
+- **Endpoint:** `login`
+- **Beschreibung:** returns a jwt upon successful authentication
+- **Auth:** not required
+- **Body:**
+```json
+{"username": "Your username", "password": "Yoru password"}
+```
+- **Response 200:**
+```json
+ey. . . 
+```
+### notAll
 
-## **Security-First Design**
+#### GET notAll
+- **Methode:** `GET`
+- **Endpoint:** `notAll`
+- **Beschreibung:** returns all cached notifications upon successful authorization
+- **Auth:** required
+- **Header:**
+```json
+{
+  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
+  "Content-Type": "application/json"
+}
+```
+- **Response 200:**
+```json
+[
+    {
+        "id": int,
+        "affected": String,
+        "problem": String,
+        "severity": int,
+        "startDate": String,
+        "endDate": String
+    }
+]
+```
+### notTop1
 
-- **Passwords are hashed using modern, industry-standard algorithms**, ensuring protection against credential theft in the event of a breach.
-- **JWT authentication support** for stateless, scalable sessions.
-- Full control over access policies—no direct database exposure.
+#### GET notTop1
+- **Methode:** `GET`
+- **Endpoint:** `notTop1`
+- **Beschreibung:** returns the highest startdate among the notifications
+- **Auth:** required
+- **Header:**
+```json
+{
+  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
+  "Content-Type": "application/json"
+}
+```
+- **Response 200:**
+```json
+date time
+```
+### set
 
-## **Optimized Caching**
+#### GET set
+- **Methode:** `GET`
+- **Endpoint:** `set`
+- **Beschreibung:** returns the settings datetime
+- **Auth:** required
+- **Header:**
+```json
+{
+  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
+  "Content-Type": "application/json"
+}
+```
+- **Response 200:**
+```json
+date time
+```
+## start-args
+start args get called when starting the app, like
+```shell
+java -jar appname.jar -command
+```
 
-Data is intelligently cached upon retrieval. Subsequent requests are served from the cache until refreshed, **dramatically reducing database load** while maintaining data freshness.
+output all commands
+```shell
+-h or --help
+```
 
-## **Database Experience Built for Speed**
+start configuration of ini
+```shell
+-c or --configuration
+```
 
-- Eliminates the need for additional tools to securely offer the data - even from mobile devices.
-- **Minimal performance overhead** on your primary database.
+remove existign user
+```shell
+-r username or --remove username
+```
 
-## **Flexible Integration**
-- Seamlessly integrates into **any existing database architecture.**
-- Built in **Java**, enabling deployment on **all Java-supported platforms** and easy extension with any Java library or custom functionality.
+show list of existing users
+```shell
+-s or --show
+```
 
-## **Interested?**
-- Contact me via **GitHub** for licensing, demos, or custom integrations.
-- **Upcoming web UI and mobile app are included free** depending on purchased license.
+add a new user. password gets hashed once entered
+```shell
+-a username password or --add username password
+```
 
-**License:** All rights reserved.
+- [Documentation](#-documentation)
+- [License](#-license)
+- [Contacts](#-contacts)
+## documentation
+coming soon
 
+## license
+all rights reserved
+
+##contacts
+rotaszko@gmx.net
