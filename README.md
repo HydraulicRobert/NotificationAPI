@@ -11,7 +11,7 @@
 ## About
 **dbProxy** is a java based database proxy that allows your database to be accessed from any authenticated device.
 Benefits include, but are not restricted to:
-- **Availability**: Thanks to caching the database won't be overwhelmed by the amount of people accessing it
+- **Availability**: Improves database performance and stability through intelligent caching mechanisms.
 - **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
 - **Maintainability**: Thanks to the usage of Java any feature can be added with ease
 
