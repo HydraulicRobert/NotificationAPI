@@ -163,7 +163,7 @@ add a new user. password gets hashed once entered
 ```
 
 ## documentation
-explanation fo the different components
+explanation of the different components
 ### folder and object structure
 #### configuration
 ##### cfginputoutput
@@ -185,7 +185,7 @@ controller = links
 
 entity = the objects like notifications
 
-repository = crud repositories wfor the entities
+repository = crud repositories for the entities
 
 #### events
 contains the events for the project
