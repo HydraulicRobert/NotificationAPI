@@ -355,7 +355,7 @@ logLevelHibernate = INFO
 showSQLQueries = false
 AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173
 ```
-### database url explaination
+### database url explanation
 tells spring what database driver to load and where to find the sql database. jdbc:sqlserver for mssql, jdbc:oracle for oracle etc.
 ```ini
 url = jdbc:sqlserver
