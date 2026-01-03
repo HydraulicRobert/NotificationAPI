@@ -147,7 +147,7 @@ start configuration of ini
 -c or --configuration
 ```
 
-remove existign user
+remove existing user
 ```shell
 -r username or --remove username
 ```
