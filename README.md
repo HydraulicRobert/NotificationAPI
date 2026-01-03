@@ -168,6 +168,7 @@ coming soon
 all rights reserved
 
 ## configuration
+restart after changing the config for it to take effect.
 when creating a ini by starting it for the first time it will look like this:
 
 ```ini
