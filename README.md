@@ -409,7 +409,7 @@ specifies wether or not sql queries get printed or not. true or false
 showSQLQueries = false
 ```
 ### server allowed origins
-type your frontend's ip and port in. since it is a list, comma seperated. like this: "http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173"
+type your frontend's ip and port in. since it is a list, comma separated. like this: "http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173"
 ```ini
 AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173
 ```
