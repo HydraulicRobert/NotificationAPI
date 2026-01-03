@@ -223,7 +223,7 @@ tells spring which driver to use
 driverClassName = com.microsoft.sqlserver.jdbc.SQLServerDriver
 ```
 ### database dialect
-tells spring which sql dialect to translate the jpa to
+tells spring which sql dialect to translate the hibernate to
 ```ini
 dialect = org.hibernate.dialect.SQLServer2012Dialect
 ```
