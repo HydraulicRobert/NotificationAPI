@@ -5,6 +5,7 @@
 - [Start Args](#startparameters)
 - [Documentation](#documentation)
 - [Configuration](#ini)
+- [Dependencies](#dependencies)
 - [License](#license)
   
 ## About
@@ -61,7 +62,7 @@ java -jar dbProxy.jar -a username password
 - **Auth:** not required
 - **Body:**
 ```json
-{"username": "Your username", "password": "Yoru password"}
+{"username": "your username", "password": "your password"}
 ```
 - **Response 200:**
 ```json
@@ -408,6 +409,8 @@ type your frontend's ip and port in. since it is a list, comma seperated. like t
 ```ini
 AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173
 ```
+## dependencies
+dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/dbProxy/network/dependencies)
 
 ## license
 all rights reserved
