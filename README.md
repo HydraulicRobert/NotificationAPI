@@ -13,7 +13,7 @@
 Benefits include, but are not restricted to:
 - **Availability**: Thanks to caching the database won't be overwhelmed by the amount of people accessing it
 - **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
-- **Maintainability**: Thanks to the usage of Java and my programming any features can be added with ease
+- **Maintainability**: Thanks to the usage of Java any feature can be added with ease
 
 The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/dbProxyFrontend) repository. Soon the jwt gets written into the cookies.
 
@@ -167,7 +167,7 @@ explanation fo the different components
 ### folder and object structure
 #### configuration
 ##### cfginputoutput
-contains all functions to read and write from files and the dumbed down logging
+contains all functions to read and write from files and the simplified logging
 
 ##### startargs
 deals with the start parameters on starting the server
@@ -360,6 +360,10 @@ tells spring what database driver to load and where to find the sql database. jd
 ```ini
 url = jdbc:sqlserver
 ```
+for oracle for example it would be
+```ini
+url = jdbc:oracle
+```
 ### database driver classname
 tells spring boot what username and password to use to log into the database
 ```ini
@@ -382,7 +386,7 @@ show or hide jpa operations in console. true or false
 show-sql = false
 ```
 ### database ddl
-decide wether or not spring changes your database depending on your jpa. none, create, create-drop, update, validate
+decide whether or not spring changes your database depending on your jpa. none, create, create-drop, update, validate
 ```ini
 ddl-auto = none
 ```
