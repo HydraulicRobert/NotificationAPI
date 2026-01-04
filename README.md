@@ -416,5 +416,7 @@ AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost
 ## dependencies
 dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/NotificationAPI/network/dependencies)
 
+and can be found in the file [dependencies.txt](https://github.com/HydraulicRobert/NotificationAPI/blob/main/src/main/resources/dependencies.txt)
+
 ## license
 all rights reserved
