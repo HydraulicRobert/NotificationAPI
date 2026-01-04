@@ -6,6 +6,7 @@
 - [Documentation](#documentation)
 - [Configuration](#ini)
 - [Dependencies](#dependencies)
+- [Planned](#Planned)
 - [License](#license)
   
 ## About
@@ -364,13 +365,13 @@ for oracle for example it would be
 ```ini
 url = jdbc:oracle
 ```
-### database driver classname
+### database credentials
 tells spring boot what username and password to use to log into the database
 ```ini
 username = sa
 password = sa
 ```
-### database credentials
+### database driver classname
 tells spring which driver to use
 ```ini
 driverClassName = com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -417,6 +418,10 @@ AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost
 dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/NotificationAPI/network/dependencies)
 
 and can be found in the file [dependencies.txt](https://github.com/HydraulicRobert/NotificationAPI/blob/main/src/main/resources/dependencies.txt)
+
+
+## Planned
+-namechange of the endpoints.
 
 ## license
 all rights reserved
