@@ -9,13 +9,13 @@
 - [License](#license)
   
 ## About
-**dbProxy** is a java based database proxy that allows your database to be accessed from any authenticated device.
+**NotificationAPI** is a java based database abstraction rest api that allows your database to be accessed from any authenticated device.
 Benefits include, but are not restricted to:
 - **Availability**: Improves database performance and stability through intelligent caching mechanisms.
 - **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
 - **Maintainability**: Thanks to the usage of Java any feature can be added with ease
 
-The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/dbProxyFrontend) repository. Soon the jwt gets written into the cookies.
+The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/NotificationAPI_Frontend) repository. Soon the jwt gets written into the cookies.
 
 ## how-to-use
 
@@ -31,15 +31,15 @@ build the JAR using gradle
 ```
 after the build finishes, the JAR will be located at
 ```shell
-build/libs/dbProxy.jar
+build/libs/NotificationAPI.jar
 ```
 start the server to generate a blank ini
 ```shell
-java -jar dbProxy.jar
+java -jar NotificationAPI.jar
 ```
 add a user with username and password
 ```shell
-java -jar dbProxy.jar -a username password
+java -jar NotificationAPI.jar -a username password
 ```
 ## Endpoints
 
@@ -414,7 +414,7 @@ type your frontend's ip and port in. since it is a list, comma separated. like t
 AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173
 ```
 ## dependencies
-dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/dbProxy/network/dependencies)
+dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/NotificationAPI/network/dependencies)
 
 ## license
 all rights reserved
