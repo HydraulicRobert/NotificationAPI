@@ -67,9 +67,6 @@ refresh and access token get saved as cookies
 ok
 ```
 - **Response 200:**
-```json
-ey. . . 
-```
 - **Cookie**
 ```
 refreshJwt: ey...
@@ -86,9 +83,6 @@ refresh and access token get saved as cookies
 ok
 ```
 - **Response 200:**
-```json
-ey. . . 
-```
 - **Cookie**
 ```
 accessJwt: ey...
