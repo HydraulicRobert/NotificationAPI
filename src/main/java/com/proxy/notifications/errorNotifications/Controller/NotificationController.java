@@ -37,7 +37,7 @@ public class NotificationController {
 		return tmpAllNotifications;
 	} 
 	
-	@GetMapping("/set")
+	@GetMapping("/settings/last-modified")
 	public String checkSettingsTimestampEqualsCache(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
 			if(checkTimestampBigger6())
@@ -75,7 +75,7 @@ public class NotificationController {
 			return cacheMgr.getCache("settingsTimestamp").get("normalKey", String.class);
 	}
 	
-	@GetMapping("/notTop1")
+	@GetMapping("/notifications/latest-startdate")
 	public String checkMostCurrentNotificationTimestampEqualsCache(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
 			if (cacheMgr.getCache("sqlChkNotTop1").get("normalKey",Boolean.class) == null)
@@ -118,7 +118,7 @@ public class NotificationController {
 			return null;
 		}*/
 	}
-	@GetMapping("/notFin")
+	//@GetMapping("/notFin")
 	public List<Notification> getNotificationsWhenFinished()
 	{
 		return cacheMgr.getCache("notificationList").get("normalKey", ArrayList.class);
@@ -136,7 +136,7 @@ public class NotificationController {
 		return getNotifications(null, null);
 	}
 
-	@GetMapping("/notAll")
+	@GetMapping("/notifications")
 	public List<Notification> getNotifications(@RequestHeader(value = "username", required = false) String strUsername, @RequestHeader(value = "password", required = false) String strPassword) 
 	{
 		/*if ((strUsername == null) ||(strPassword == null)) {
@@ -192,7 +192,7 @@ public class NotificationController {
 			return null;
 		}*/
 	}
-	@GetMapping("/chk6")
+	//@GetMapping("/chk6")
 	public boolean checkTimestampBigger6() 
 	{
 		if ( cacheMgr.getCache("sixSecondTimestamp").get("longValue", Long.class) == null) {
@@ -228,7 +228,7 @@ public class NotificationController {
 		}
 	}
 	//public boolean checkUserExistsCache(String username, String password) {
-	@GetMapping("/check")
+	//@GetMapping("/check")
 	public boolean checkUserExistsCache(@RequestHeader(value = "username", required = false) String username, @RequestHeader(value = "password", required = false) String password) {	
 		if (checkUserListExistsCache())
 		{

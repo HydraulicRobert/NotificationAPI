@@ -40,6 +40,7 @@ public class WebsecurityConfig {
 	private JwtAuthenticationFilter jwtAuthFilter;
 	private PostFilterLogFilter postFilterLogFilter;
 	private final UserDetailsService userDetailsService;
+	
 	/*private final RsaKeyProperties rsaKeyProperties;
 	@Value("${spring.security.oauth2.client.registration.github.client-id}")
 	private String clientId;
@@ -67,7 +68,14 @@ public class WebsecurityConfig {
 		.cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
 		.csrf(csrf -> csrf.disable())
 	   		.authorizeHttpRequests(auth -> auth
-	   				.requestMatchers("/","/login","/default-ui.css","/favicon.ico","/error").permitAll()
+	   				.requestMatchers(
+	   						"/",
+	   						"/auth/login",
+	   						"/auth/refresh",
+	   						"/default-ui.css",
+	   						"/favicon.ico",
+	   						"/error"
+	   						).permitAll()
 	   				.anyRequest().authenticated()
 	   				)
 	   		.sessionManagement(session -> session

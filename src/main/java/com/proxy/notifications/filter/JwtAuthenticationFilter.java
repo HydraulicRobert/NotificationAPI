@@ -1,6 +1,7 @@
 package com.proxy.notifications.filter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.hibernate.annotations.Filter;
 import org.springframework.context.annotation.Lazy;
@@ -19,6 +20,7 @@ import com.proxy.notifications.jwt.JwtUtils;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -34,13 +36,17 @@ public JwtAuthenticationFilter(JwtUtils jwtUtils, @Lazy UserDetailsService userD
 protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 		throws ServletException, IOException {
 	// TODO Auto-generated method stub
-	String header = request.getHeader("Authorization");
+	String jwt = Optional.ofNullable(request.getCookies())
+			.stream()
+			.flatMap(java.util.Arrays::stream)
+			.filter(c -> "accessJwt".equals(c.getName()))
+			.map(Cookie::getValue)
+			.findFirst()
+			.orElse(null);
 	String username = null;
-	String jwt = null;
 //	Authentication authentication;
-	if(header != null && header.startsWith("Bearer ey"))
+	if(jwt != null)
 	{
-		jwt = header.substring(7);
 		username = jwtUtils.extractUsername(jwt);
 	}
 	if(username != null && SecurityContextHolder.getContext().getAuthentication() == null)

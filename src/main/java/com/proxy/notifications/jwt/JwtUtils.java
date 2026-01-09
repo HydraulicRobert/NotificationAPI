@@ -5,6 +5,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,18 +16,23 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.AeadAlgorithm;
+import io.jsonwebtoken.security.KeyAlgorithm;
 
 @Component
 public class JwtUtils {
 	@Value("${token.secret.key}")
 	private String secret;
-	@Value("${token.expirationms}")
-	private long expirationTime;
+	@Value("${refreshToken.expirationms}")
+	private long expirationTimeRefreshToken;
+	@Value("${accesToken.expirationms}")
+	private long expirationTimeAccessToken;
 	private PublicKey pubKey;
 	private PrivateKey privKey;
 	Map<String, Object> rsaKeys;
@@ -39,16 +45,47 @@ public class JwtUtils {
 			e.printStackTrace();
 		}
 	}
-	public String createJwt(String name)
+	public ResponseCookie setJwtCookie(String strSetJwtName, String jwt, char chrLength)
 	{
+		long lngMaxAge;
+		String strAuthPath;
+		if(chrLength == 'h')
+		{
+			lngMaxAge = expirationTimeRefreshToken;
+			strAuthPath = "/auth/refresh";
+		}else {
+			lngMaxAge = expirationTimeAccessToken;
+			strAuthPath = "/";
+		}
+		lngMaxAge = lngMaxAge/600000;
+		ResponseCookie jwtCookie = ResponseCookie.from(strSetJwtName, jwt)
+		.maxAge(Duration.ofMinutes(lngMaxAge))
+		.path(strAuthPath)
+		.secure(false)
+		.httpOnly(true)
+		.sameSite("Lax")
+		.build()
+		;
+		return jwtCookie;
+	}
+	public String createJwt(String name, char chrLength)
+	{
+		long lngDur;
+		if(chrLength == 'l') {
+			lngDur = expirationTimeRefreshToken;
+		}else {
+			lngDur = expirationTimeAccessToken;
+		}
 		try {
-			return Jwts
-					.builder()
-					.subject(name)
-					.issuedAt(new Date(System.currentTimeMillis()))
-					.expiration(new Date(System.currentTimeMillis()+expirationTime))
-					.signWith(privKey)
-					.compact();
+			JwtBuilder jwts = Jwts
+			.builder()
+			.subject(name)
+			.issuedAt(new Date(System.currentTimeMillis()))
+			.expiration(new Date(System.currentTimeMillis()+lngDur))
+			.signWith(privKey)
+			//.encryptWith(privKey, Jwts.ENC.A256CBC_HS512)
+			;
+			return jwts.compact();
 		}catch(Exception E)
 		{
 			return null;
