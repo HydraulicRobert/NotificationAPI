@@ -48,40 +48,61 @@ java -jar NotificationAPI.jar -a username password
 
 | Method | Endpoint | Description |
 |-------|---------|-------------|
-| POST | `/login` | receive a jwt on successful authentication |
-| GET | `/notAll` | get all notifications |
-| GET | `/notTop1` | get most current startdate of notifications |
-| GET | `/set` | get settings last save action datetime|
+| POST | `/auth/login` | receive a refresh jwt on successful authentication |
+| POST | `/auth/refresh` | receive an access jwt on successful authentication |
+| GET | `/notifications` | get all notifications |
+| GET | `/notifications/latest-startdate` | get most current startdate of notifications |
+| GET | `/settings/last-modified` | get settings last save action datetime|
 
 ---
-### login
-
-#### POST login
+### /auth/login
+refresh and access token get saved as cookies
+#### POST /auth/login
 - **Method:** `POST`
-- **Endpoint:** `login`
+- **Endpoint:** `/auth/login`
 - **Description:** returns a jwt upon successful authentication
 - **Auth:** not required
 - **Body:**
-```json
-{"username": "your username", "password": "your password"}
+```
+ok
 ```
 - **Response 200:**
 ```json
 ey. . . 
 ```
-### notAll
+- **Cookie**
+```
+refreshJwt: ey...
+```
+### /auth/refresh
+refresh and access token get saved as cookies
+#### POST /auth/refresh
+- **Method:** `POST`
+- **Endpoint:** `/auth/refresh`
+- **Description:** returns a jwt upon successful authentication
+- **Auth:** not required
+- **Cookie:**
+```
+ok
+```
+- **Response 200:**
+```json
+ey. . . 
+```
+- **Cookie**
+```
+accessJwt: ey...
+```
+### /notifications
 
-#### GET notAll
+#### GET /notifications
 - **Method:** `GET`
-- **Endpoint:** `notAll`
+- **Endpoint:** `/notifications`
 - **Description:** returns all cached notifications upon successful authorization
 - **Auth:** required
-- **Header:**
-```json
-{
-  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
-  "Content-Type": "application/json"
-}
+- **Cookie:**
+```
+accessJwt: ey...
 ```
 - **Response 200:**
 ```json
@@ -96,37 +117,31 @@ ey. . .
     }
 ]
 ```
-### notTop1
+### /notifications/latest-startdate
 
-#### GET notTop1
+#### GET /notifications/latest-startdate
 - **Method:** `GET`
-- **Endpoint:** `notTop1`
+- **Endpoint:** `/notifications/latest-startdate`
 - **Description:** returns the highest startdate among the notifications
 - **Auth:** required
-- **Header:**
-```json
-{
-  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
-  "Content-Type": "application/json"
-}
+- **Cookie:**
+```
+accessJwt: ey...
 ```
 - **Response 200:**
 ```json
 date time
 ```
-### set
+### /settings/last-modified
 
-#### GET set
+#### GET /settings/last-modified
 - **Method:** `GET`
-- **Endpoint:** `set`
+- **Endpoint:** `/settings/last-modified`
 - **Description:** returns the settings datetime
 - **Auth:** required
-- **Header:**
-```json
-{
-  "Authorization": "Bearer <YOUR_ACCESS_TOKEN>",
-  "Content-Type": "application/json"
-}
+- **Cookie:**
+```
+accessJwt: ey...
 ```
 - **Response 200:**
 ```json
