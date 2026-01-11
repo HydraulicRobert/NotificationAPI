@@ -62,11 +62,12 @@ refresh and access token get saved as cookies
 - **Endpoint:** `/auth/login`
 - **Description:** returns a jwt upon successful authentication
 - **Auth:** not required
+
+- **Response 200:**
 - **Body:**
 ```
 ok
 ```
-- **Response 200:**
 - **Cookie**
 ```
 refreshJwt: ey...
