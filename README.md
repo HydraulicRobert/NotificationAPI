@@ -442,3 +442,6 @@ and can be found in the file [dependencies.txt](https://github.com/HydraulicRobe
 
 ## license
 all rights reserved
+
+NOTICE: The usage of this software or its source code, including but not limited to datasets, training,
+or any other AI-related activities, is strictly prohibited.
