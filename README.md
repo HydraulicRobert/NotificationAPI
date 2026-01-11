@@ -77,7 +77,11 @@ refresh and access token get saved as cookies
 - **Method:** `POST`
 - **Endpoint:** `/auth/refresh`
 - **Description:** returns a jwt upon successful authentication
-- **Auth:** not required
+- **Auth:** required
+- **Cookie**
+```
+refreshJwt: ey...
+```
 - **Body:**
 ```
 ok
