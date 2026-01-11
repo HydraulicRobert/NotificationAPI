@@ -82,11 +82,11 @@ refresh and access token get saved as cookies
 ```
 refreshJwt: ey...
 ```
+- **Response 200:**
 - **Body:**
 ```
 ok
 ```
-- **Response 200:**
 - **Cookie**
 ```
 accessJwt: ey...
@@ -103,6 +103,7 @@ accessJwt: ey...
 accessJwt: ey...
 ```
 - **Response 200:**
+- **Body:**
 ```json
 [
     {
@@ -127,6 +128,7 @@ accessJwt: ey...
 accessJwt: ey...
 ```
 - **Response 200:**
+- **Body:**
 ```json
 date time
 ```
@@ -142,6 +144,7 @@ date time
 accessJwt: ey...
 ```
 - **Response 200:**
+- **Body:**
 ```json
 date time
 ```
