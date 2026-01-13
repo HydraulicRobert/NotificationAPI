@@ -30,6 +30,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 import com.proxy.notifications.configuration.CfgInputOutput;
 import com.proxy.notifications.errorNotifications.entity.AuthRequest;
 import com.proxy.notifications.errorNotifications.entity.Notification;
+import com.proxy.notifications.errorNotifications.service.AuthService;
 import com.proxy.notifications.jwt.JwtUtils;
 import com.proxy.notifications.service.TokenService;
 
@@ -39,52 +40,30 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 public class AuthController {
 	
-	private AuthenticationManager authenticationManager;
-	private JwtUtils jwtUtils;
-	private UserDetailsService userDetailsService;
-	
-	public AuthController(AuthenticationManager authenticationManager,JwtUtils jwtUtils, UserDetailsService userDetailsService) {
-		this.authenticationManager = authenticationManager;
-		this.jwtUtils = jwtUtils;
-		this.userDetailsService = userDetailsService;
+	private AuthService authService;
+	public AuthController(
+			AuthService authService
+			) {
+		this.authService = authService;
 	}
 	@PostMapping("/auth/login")
 	public ResponseEntity<String> jwtRefreshTokenReturn(@RequestBody(required = false) AuthRequest authRequest, HttpServletResponse response)
 	{
-		if(authRequest != null)
-		{
-			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(
-							authRequest.getUserName(),
-							authRequest.getPassword()
-							)
-					);
-			UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserName());
-			String jwt = jwtUtils.createJwt(userDetails.getUsername(), 'l');
-			ResponseCookie jwtCookie = jwtUtils.setJwtCookie("refreshJwt", jwt, 'l');
-			return ResponseEntity.ok()
-					.header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-					.body("ok");
-		}else
-		{
-			return null;
-		}
+		
+		String strRefreshToken;
+		strRefreshToken = authService.getRefreshToken(authRequest, response);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.SET_COOKIE, strRefreshToken.toString())
+				.body("ok");
 	}
 	@PostMapping("/auth/refresh")
-	public ResponseEntity<String> jwtAccessTokenReturn(@CookieValue(name = "refreshJwt", required = false) String refreshJwt)
+	public ResponseEntity<String> jwtAccessTokenReturn(@CookieValue(name = "refreshJwt", required = false) String refreshToken)
 	{
-		if(refreshJwt != null)
-		{
-		UserDetails userDetails =  userDetailsService.loadUserByUsername(jwtUtils.extractUsername(refreshJwt));
-		String jwt = jwtUtils.createJwt(userDetails.getUsername(), 's');
-		ResponseCookie jwtCookie = jwtUtils.setJwtCookie("accessJwt", jwt, 's');
+		String strAccessToken;
+		strAccessToken = authService.getAccessToken(refreshToken);
 		return ResponseEntity.ok()
-				.header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+				.header(HttpHeaders.SET_COOKIE, strAccessToken)
 				.body("ok");
-		}else
-		{
-			return null;
-		}
 	}
 }
 

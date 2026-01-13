@@ -20,6 +20,7 @@ import org.springframework.cache.CacheManager;
 
 import com.proxy.notifications.errorNotifications.entity.Settings;
 import com.proxy.notifications.errorNotifications.repository.SettingsRepository;
+import com.proxy.notifications.errorNotifications.service.SettingsService;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -28,7 +29,7 @@ class settingsControllerTest {
 	@Mock
 	private CacheManager tstCacheMgr;
 
-	private SettingsController tstSttCon;
+	private SettingsService tstSttCon;
 	@Mock
 	private SettingsRepository tstSttRep;
 	@Mock
@@ -38,9 +39,9 @@ class settingsControllerTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		tstSttCon = new SettingsController(tstSttRep, tstCacheMgr);
+		tstSttCon = new SettingsService(tstSttRep, tstCacheMgr);
 		tstSttRep = mock(SettingsRepository.class, RETURNS_SMART_NULLS);
-		tstSttCon.sttRep = tstSttRep;
+		//tstSttCon. sttRep = tstSttRep;
 		tstStt = mock(Settings.class, RETURNS_SMART_NULLS);
 		tstStt2 = mock(Settings.class, RETURNS_SMART_NULLS);
 	}

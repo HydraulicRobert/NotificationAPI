@@ -1,13 +1,13 @@
 ## Table of Contents
 - [About](#About)
-- [How to Use](#how-to-use)
+- [How to Use](#How to use)
 - [Endpoints](#Endpoints)
-- [Start Args](#startparameters)
-- [Documentation](#documentation)
-- [Configuration](#ini)
-- [Dependencies](#dependencies)
+- [Startparameters](#Startparameters)
+- [Documentation](#Documentation)
+- [Configuration](#Configuration)
+- [Dependencies](#Dependencies)
 - [Planned](#Planned)
-- [License](#license)
+- [License](#License)
   
 ## About
 **NotificationAPI** is a java based database abstraction rest api that allows your database to be accessed from any authenticated device.
@@ -18,7 +18,7 @@ Benefits include, but are not restricted to:
 
 The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/NotificationAPI_Frontend) repository. Soon the jwt gets written into the cookies.
 
-## how-to-use
+## How to use
 
 make sure that your JAVA_HOME environment variable is set and java 17+ is installed.
 
@@ -180,7 +180,7 @@ add a new user. password gets hashed once entered
 -a username password or --add username password
 ```
 
-## documentation
+## Documentation
 explanation of the different components
 ### folder and object structure
 #### configuration
@@ -334,7 +334,7 @@ CREATE TABLE [dbo].[settings](
 GO
 ```
 
-## configuration
+## Configuration
 restart after changing the config for it to take effect.
 when creating a ini by starting it for the first time it will look like this:
 
@@ -431,7 +431,7 @@ type your frontend's ip and port in. since it is a list, comma separated. like t
 ```ini
 AllowedOrigins = http://0.0.0.0:5173,http://192.168.0.223:5173, http://localhost:5173
 ```
-## dependencies
+## Dependencies
 dependencies are listed under [Dependencies](https://github.com/HydraulicRobert/NotificationAPI/network/dependencies)
 
 and can be found in the file [dependencies.txt](https://github.com/HydraulicRobert/NotificationAPI/blob/main/src/main/resources/dependencies.txt)
@@ -440,7 +440,7 @@ and can be found in the file [dependencies.txt](https://github.com/HydraulicRobe
 ## Planned
 -namechange of the endpoints.
 
-## license
+## License
 all rights reserved
 
 NOTICE: The usage of this software or its source code, including but not limited to datasets, training,

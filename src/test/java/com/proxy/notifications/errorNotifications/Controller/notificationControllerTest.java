@@ -16,10 +16,11 @@ import org.springframework.cache.CacheManager;
 
 import com.proxy.notifications.errorNotifications.entity.Notification;
 import com.proxy.notifications.errorNotifications.repository.NotificationRepository;
+import com.proxy.notifications.errorNotifications.service.NotificationService;
 
 class notificationControllerTest {
 
-	NotificationController ntCon;
+	NotificationService ntSrvc;
 	
 	@Mock
 	CacheManager cachMgr;
@@ -35,12 +36,11 @@ class notificationControllerTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		ntCon 	= new NotificationController(ntRep, null, cachMgr);
 		ntRep 	= mock(NotificationRepository.class, RETURNS_SMART_NULLS);
 		nt		= mock(Notification.class, RETURNS_SMART_NULLS);
 		nt2		= mock(Notification.class, RETURNS_SMART_NULLS);
 		cachMgr	= mock(CacheManager.class,RETURNS_SMART_NULLS);
-		ntCon.notRep = ntRep;
+		ntSrvc 	= new NotificationService(ntRep, null, cachMgr);
 	}
 
 	@Test
@@ -61,7 +61,7 @@ class notificationControllerTest {
 		lstNots.add(nt2);
 		Iterable<Notification> objectList = (List<Notification>)lstNots;
 		//when(ntCon.iteratorToListNotification(objectList, lstNotsTRS)).thenReturn(lstNots);
-		assertThat(ntCon.iteratorToListNotification(objectList, lstNotsTRS).get(0).equals(nt));
+		assertThat(ntSrvc.iteratorToListNotification(objectList, lstNotsTRS).get(0).equals(nt));
 	}
 
 	/*@Test
