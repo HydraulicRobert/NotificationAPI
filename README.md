@@ -1,6 +1,6 @@
 ## Table of Contents
 - [About](#About)
-- [How to Use](#How to use)
+- [Manual](#Manual)
 - [Endpoints](#Endpoints)
 - [Startparameters](#Startparameters)
 - [Documentation](#Documentation)
@@ -18,7 +18,7 @@ Benefits include, but are not restricted to:
 
 The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/NotificationAPI_Frontend) repository. Soon the jwt gets written into the cookies.
 
-## How to use
+## Manual
 
 make sure that your JAVA_HOME environment variable is set and java 17+ is installed.
 
@@ -438,7 +438,6 @@ and can be found in the file [dependencies.txt](https://github.com/HydraulicRobe
 
 
 ## Planned
--namechange of the endpoints.
 
 ## License
 all rights reserved
