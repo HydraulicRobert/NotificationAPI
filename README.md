@@ -16,7 +16,7 @@ Benefits include, but are not restricted to:
 - **Security**: Improved security thanks to BCrypt hashed passwords and JWTs for authorization
 - **Maintainability**: Thanks to the usage of Java any feature can be added with ease
 
-The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/NotificationAPI_Frontend) repository. Soon the jwt gets written into the cookies.
+The server also comes with a React based frontend in a [different](https://github.com/hydraulicRobert/NotificationAPI_Frontend) repository. Tokens saved as cookies.
 
 ## Manual
 
